@@ -22,6 +22,24 @@
   .font-heading {
     font-family: var(--font-heading);
   }
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+  .animate-pan-bg {
+    background-size: 200% 200%;
+    animation: pan-bg 3s ease infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pan-bg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 body {

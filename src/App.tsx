@@ -268,12 +268,12 @@ function CourseCard({ course }: { course: Course; key?: React.Key }) {
     <motion.div
       variants={itemVariants}
       whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl bg-[var(--color-card)] shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300 border border-white/5 hover:border-[var(--color-accent)]/40"
+      className="group relative flex flex-col rounded-2xl bg-[var(--color-card)] shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300"
     >
-      {/* Glow effect behind the card on hover */}
-      <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-b from-[var(--color-accent)] to-transparent opacity-0 blur-xl transition duration-500 group-hover:opacity-10" />
+      {/* Animated Gradient Border */}
+      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 bg-[length:200%_auto] opacity-0 group-hover:opacity-100 animate-pan-bg transition-opacity duration-500" />
       
-      <div className="relative z-10 flex h-full flex-col bg-[var(--color-card)]">
+      <div className="relative z-10 flex h-full flex-col bg-[var(--color-card)] rounded-2xl overflow-hidden border border-white/5 group-hover:border-transparent transition-colors duration-300">
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-900">
           <img
             src={course.image}
@@ -326,15 +326,16 @@ function CourseCard({ course }: { course: Course; key?: React.Key }) {
             )}
           </div>
 
-          <div className="relative group/btn">
+          <div className="relative group/btn mt-auto">
             <a
               href={course.telegram}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-[var(--color-accent)] to-blue-600 px-4 py-3 text-sm font-heading font-semibold text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:scale-[1.02]"
+              className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-[var(--color-accent)] to-blue-600 px-4 py-3 text-sm font-heading font-semibold text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:scale-[1.02] group/link"
             >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/link:animate-shimmer" />
               <span className="relative z-10 flex items-center gap-2">
-                <span className="font-en text-base font-bold tracking-wide">Open Course</span>
+                <span className="font-en text-base font-bold tracking-wide">Open for Free</span>
                 <ExternalLink className="h-4 w-4" />
               </span>
             </a>
@@ -384,41 +385,45 @@ export default function App() {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-[var(--color-card)] p-8 shadow-2xl border border-white/10"
+              className="relative w-full max-w-md rounded-3xl p-[1px] shadow-2xl"
               dir="rtl"
             >
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute left-4 top-4 rounded-full p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 bg-[length:200%_auto] animate-pan-bg" />
+              <div className="relative h-full w-full rounded-[23px] bg-[var(--color-card)] p-8 overflow-hidden">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="absolute left-4 top-4 z-10 rounded-full p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  <X className="h-5 w-5" />
+                </button>
 
-              <div className="mb-6 flex justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
-                  <Send className="h-10 w-10 ml-1" />
+                <div className="mb-6 flex justify-center relative z-10">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                    <Send className="h-10 w-10 ml-1" />
+                  </div>
                 </div>
+
+                <h3 className="mb-4 text-center text-xl sm:text-2xl font-heading font-bold text-white leading-snug relative z-10">
+                  تنبيه هام! 🚨
+                </h3>
+                <p className="mb-8 text-center text-slate-300 leading-[1.8] font-sans text-sm sm:text-base relative z-10">
+                  عشان تفتح معك الكورسات وتستفيد منها بدون أي مشاكل، ضروري تنضم لقناتنا الرسمية على <span className="font-en text-lg font-bold text-[var(--color-accent)]">Telegram</span> أول.
+                  <br/><br/>
+                  اشترك الحين وخذ راحتك في المنصة!
+                </p>
+
+                <a
+                  href="https://t.me/+RJCiT8Fb9zc5ZWE0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setShowModal(false)}
+                  className="relative overflow-hidden flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-4 text-base sm:text-lg font-heading font-bold text-white transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:scale-[1.02] group/modalbtn z-10"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/modalbtn:animate-shimmer" />
+                  <Send className="relative z-10 h-5 w-5" />
+                  <span className="relative z-10">انضم للقناة الحين</span>
+                </a>
               </div>
-
-              <h3 className="mb-4 text-center text-xl sm:text-2xl font-heading font-bold text-white leading-snug">
-                تنبيه هام! 🚨
-              </h3>
-              <p className="mb-8 text-center text-slate-300 leading-[1.8] font-sans text-sm sm:text-base">
-                عشان تفتح معك الكورسات وتستفيد منها بدون أي مشاكل، ضروري تنضم لقناتنا الرسمية على <span className="font-en text-lg font-bold text-[var(--color-accent)]">Telegram</span> أول.
-                <br/><br/>
-                اشترك الحين وخذ راحتك في المنصة!
-              </p>
-
-              <a
-                href="https://t.me/+RJCiT8Fb9zc5ZWE0"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setShowModal(false)}
-                className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-4 text-base sm:text-lg font-heading font-bold text-white transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:scale-[1.02]"
-              >
-                <Send className="h-5 w-5" />
-                <span>انضم للقناة الحين</span>
-              </a>
             </motion.div>
           </motion.div>
         )}
@@ -461,17 +466,55 @@ export default function App() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mb-16 text-center"
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-heading font-medium text-cyan-400">
-            <Sparkles className="h-4 w-4" />
-            <span>منصتك المتكاملة للتصميم</span>
-          </div>
-          <h2 className="text-3xl font-heading font-extrabold text-[var(--color-text-main)] sm:text-4xl lg:text-5xl leading-[1.4] sm:leading-[1.3]">
-            طور مهاراتك واوصل <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] to-blue-500">لمستوى الاحتراف</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg leading-[1.8] text-[var(--color-text-secondary)] font-sans">
-            مكتبة شاملة فيها أقوى الكورسات في التصميم، الموشن جرافيك، والذكاء الاصطناعي. جهزناها لك عشان تطور مهاراتك وتصير محترف. ابدأ رحلتك الإبداعية الحين!
-          </p>
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: "spring" }}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-heading font-medium text-cyan-400 relative overflow-hidden group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
+            <Sparkles className="h-4 w-4 relative z-10" />
+            <span className="relative z-10">منصتك المتكاملة للتصميم</span>
+          </motion.div>
+          
+          <motion.h2 
+            className="text-3xl font-heading font-extrabold text-[var(--color-text-main)] sm:text-4xl lg:text-5xl leading-[1.4] sm:leading-[1.3]"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } }
+            }}
+          >
+            {"طور مهاراتك واوصل".split(" ").map((word, i) => (
+              <motion.span key={i} className="inline-block ml-2" variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+                {word}
+              </motion.span>
+            ))}
+            <br className="hidden sm:block" />
+            <motion.span 
+              variants={{ hidden: { opacity: 0, y: 20, scale: 0.9 }, show: { opacity: 1, y: 0, scale: 1 } }}
+              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] via-blue-400 to-[var(--color-accent)] bg-[length:200%_auto] animate-pan-bg mt-2"
+            >
+              لمستوى الاحتراف
+            </motion.span>
+          </motion.h2>
+          
+          <motion.p 
+            className="mx-auto mt-6 max-w-2xl text-base sm:text-lg leading-[1.8] text-[var(--color-text-secondary)] font-sans"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.03, delayChildren: 0.8 } }
+            }}
+          >
+            {"مكتبة شاملة فيها أقوى الكورسات في التصميم، الموشن جرافيك، والذكاء الاصطناعي. جهزناها لك عشان تطور مهاراتك وتصير محترف. ابدأ رحلتك الإبداعية الحين!".split(" ").map((word, i) => (
+              <motion.span key={i} className="inline-block ml-1" variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
+                {word}
+              </motion.span>
+            ))}
+          </motion.p>
         </motion.div>
 
         <motion.div 
